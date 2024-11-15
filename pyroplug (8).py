@@ -1049,10 +1049,13 @@ async def ggn_new(userbot, client, sender, edit_id, msg_link, i, file_n):
             delete_words = load_delete_words(sender)
             for word in delete_words:
               original_file_name = original_file_name.replace(word, "")
-            
+            replacements = load_replacement_words(sender)
+            for word, replace_word in replacements.items():
+              final = original_file_name.replace(word, replace_word)  
+                           
             # Rename the file with the updated file name and custom renaming tag
             video_file_name = original_file_name + " " + custom_rename_tag
-            new_file_name = original_file_name + " " + custom_rename_tag + "." + file_extension
+            new_file_name = final + " " + custom_rename_tag + "." + file_extension
             os.rename(file, new_file_name)
             file = new_file_name   
           
